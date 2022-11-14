@@ -1,0 +1,126 @@
+openapi: 3.0.1
+info:
+  title: API REST
+  description: API desenvolvida para a avaliação referente à Sprint 3.
+  version: 1.0.0
+  contact:
+    name: Contato
+    email: solano.kruger.pb@compasso.com.br
+servers:
+- url: http://localhost:8080/api/states
+  description: Avaliação Sprint 3
+paths:
+  /api/states:
+    post:
+      summary: Cria um novo Estado
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Estado"
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/Estado"
+    get:
+      summary: Consulta todos os Estados
+      parameters:
+        - name: regiao
+          in: query
+          schema:
+            type: string
+          description: Nome da região a ser filtrado.
+        - name: ordenacao
+          in: query
+          schema:
+            type: string
+          description: Nome do parametro a ser ordenado.
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                $ref: "#/components/schemas/Estado"
+  /api/states/{id}:
+    parameters:
+    - name: id
+      in: path
+      description: Identificador do Estado
+      schema:
+        type: integer
+      required: true
+    get:
+      summary: Recupera um Estado pelo ID (Região)
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Regiao"
+        404:
+          description: Estado não encontrado
+          content:
+            application/json:
+              example: "Not Found"
+    put:
+      summary: Atualiza um Estado pelo ID
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Estado"
+        404:
+          description: Estado não encontrado
+          content:
+            application/json:
+              example: "Not Found"
+    delete:
+      summary: Deleta um Estado pelo ID
+      responses:
+        200:
+          description: Sucesso
+        404:
+          description: Estado não encontrado
+          content:
+            application/json:
+              example: "Not Found"
+components:
+  schemas:
+    Estado: 
+      type: object
+      properties:
+        id:
+          type: integer
+        nome: 
+          type: string
+        regiao: 
+          type: string
+        populacao:
+          type: number
+        capital:
+          type: string
+        area:
+          type: number
+    Regiao:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome: 
+          type: string
+        regiao: 
+          type: string
+        capital:
+          type: string
+  
+          
+      
